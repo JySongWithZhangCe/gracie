@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gracie.test1.mapper.ClassTeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.gracie.test1.domain.ClassTeacherKey" >
+    <constructor >
+      <idArg column="ctid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="classid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="teaid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ctid, classid, teaid
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="com.gracie.test1.domain.ClassTeacherKey" >
+    delete from class_teacher
+    where ctid = #{ctid,jdbcType=INTEGER}
+      and classid = #{classid,jdbcType=INTEGER}
+      and teaid = #{teaid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gracie.test1.domain.ClassTeacherKey" >
+    insert into class_teacher (ctid, classid, teaid
+      )
+    values (#{ctid,jdbcType=INTEGER}, #{classid,jdbcType=INTEGER}, #{teaid,jdbcType=INTEGER}
+      )
+  </insert>
+  <select id="selectByClassId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from class_teacher
+    where classid = #{classid,jdbcType=INTEGER}
+  </select>
+  <insert id="insertSelective" parameterType="com.gracie.test1.domain.ClassTeacherKey" >
+    insert into class_teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ctid != null" >
+        ctid,
+      </if>
+      <if test="classid != null" >
+        classid,
+      </if>
+      <if test="teaid != null" >
+        teaid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ctid != null" >
+        #{ctid,jdbcType=INTEGER},
+      </if>
+      <if test="classid != null" >
+        #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="teaid != null" >
+        #{teaid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

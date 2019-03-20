@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gracie.test1.mapper.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.gracie.test1.domain.Teacher" >
+    <constructor >
+      <idArg column="teaid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="teaname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="teasex" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    teaid, teaname, teasex
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where teaid = #{teaid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teacher
+    where teaid = #{teaid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gracie.test1.domain.Teacher" >
+    insert into teacher (teaid, teaname, teasex
+      )
+    values (#{teaid,jdbcType=INTEGER}, #{teaname,jdbcType=VARCHAR}, #{teasex,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gracie.test1.domain.Teacher" >
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teaid != null" >
+        teaid,
+      </if>
+      <if test="teaname != null" >
+        teaname,
+      </if>
+      <if test="teasex != null" >
+        teasex,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teaid != null" >
+        #{teaid,jdbcType=INTEGER},
+      </if>
+      <if test="teaname != null" >
+        #{teaname,jdbcType=VARCHAR},
+      </if>
+      <if test="teasex != null" >
+        #{teasex,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gracie.test1.domain.Teacher" >
+    update teacher
+    <set >
+      <if test="teaname != null" >
+        teaname = #{teaname,jdbcType=VARCHAR},
+      </if>
+      <if test="teasex != null" >
+        teasex = #{teasex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where teaid = #{teaid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gracie.test1.domain.Teacher" >
+    update teacher
+    set teaname = #{teaname,jdbcType=VARCHAR},
+      teasex = #{teasex,jdbcType=VARCHAR}
+    where teaid = #{teaid,jdbcType=INTEGER}
+  </update>
+</mapper>

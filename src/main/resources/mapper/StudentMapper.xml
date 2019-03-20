@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gracie.test1.mapper.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.gracie.test1.domain.Student" >
+    <constructor >
+      <idArg column="stuid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="stuname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="stusex" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="stubirthday" jdbcType="DATE" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    stuid, stuname, stusex, stubirthday
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where stuid = #{stuid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from student
+    where stuid = #{stuid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.gracie.test1.domain.Student" >
+    insert into student (stuid, stuname, stusex, 
+      stubirthday)
+    values (#{stuid,jdbcType=INTEGER}, #{stuname,jdbcType=VARCHAR}, #{stusex,jdbcType=VARCHAR}, 
+      #{stubirthday,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gracie.test1.domain.Student" >
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stuid != null" >
+        stuid,
+      </if>
+      <if test="stuname != null" >
+        stuname,
+      </if>
+      <if test="stusex != null" >
+        stusex,
+      </if>
+      <if test="stubirthday != null" >
+        stubirthday,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stuid != null" >
+        #{stuid,jdbcType=INTEGER},
+      </if>
+      <if test="stuname != null" >
+        #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="stusex != null" >
+        #{stusex,jdbcType=VARCHAR},
+      </if>
+      <if test="stubirthday != null" >
+        #{stubirthday,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gracie.test1.domain.Student" >
+    update student
+    <set >
+      <if test="stuname != null" >
+        stuname = #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="stusex != null" >
+        stusex = #{stusex,jdbcType=VARCHAR},
+      </if>
+      <if test="stubirthday != null" >
+        stubirthday = #{stubirthday,jdbcType=DATE},
+      </if>
+    </set>
+    where stuid = #{stuid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gracie.test1.domain.Student" >
+    update student
+    set stuname = #{stuname,jdbcType=VARCHAR},
+      stusex = #{stusex,jdbcType=VARCHAR},
+      stubirthday = #{stubirthday,jdbcType=DATE}
+    where stuid = #{stuid,jdbcType=INTEGER}
+  </update>
+</mapper>
